@@ -1,5 +1,5 @@
 #include <printf.h>
-#include "stack.h"
+#include "sqStack.h"
 
 //
 // Created by visionary on 2020/5/21.
@@ -42,21 +42,3 @@ void printStack(SqStack &sqStack) {
     }
     printf("\n");
 };
-
-void GetTop(){
-}
-
-
-int main(int argc, const char *argv[]) {
-    int array[4] = {1, 3, 4, 2};
-    SqStack sqStack = initStack(array, 4);
-    printStack(sqStack);
-    push(sqStack, 5);
-    printStack(sqStack);
-    int popNumber = pop(sqStack);
-    printf("popNumber %d out\n", popNumber);
-    printStack(sqStack);
-    push(sqStack, 6);
-    push(sqStack, 6);
-    printStack(sqStack);
-}

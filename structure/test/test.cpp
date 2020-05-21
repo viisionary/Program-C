@@ -23,13 +23,12 @@ void pointerExample2(Object &object) {
 //    *&object.number=2;
 }
 
-
 void pointerExample4(Object **pObject) {
     *pObject = (Objects *) malloc(sizeof(Objects));
     (*pObject)->number = 4;
 }
 
-int main(int argc, const char *argv[]) {
+void test() {
     Object myObject;
     myObject.number = 0;
     Object myObject3 = {0};

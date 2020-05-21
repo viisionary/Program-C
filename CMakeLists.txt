@@ -11,6 +11,8 @@ set(CMAKE_C_STANDARD 11)
 #set(SOURCE_FILES test-static.c order.c)
 #set(SOURCE_FILES order.c)
 
-set(SOURCE_FILES dataStructure.cpp)
+#set(SOURCE_FILES dataStructure.cpp)
+#set(SOURCE_FILES structure/stack/stack.c structure/stack/StackFunction.h)
+set(SOURCE_FILES structure/stack/stack.cpp structure/stack/stack.h)
 
 add_executable(Program-C ${SOURCE_FILES})

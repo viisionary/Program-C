@@ -59,6 +59,7 @@ char LiPop(LiStack *pNode) {
     }
     return '1';
 };
+
 char top(LiStack *pLiStack) {
     if (!isEmpty(pLiStack)) {
         return pLiStack->next->element;

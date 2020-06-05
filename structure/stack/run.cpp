@@ -1,5 +1,6 @@
 #include <printf.h>
 #include "sqStack.h"
+#include "../graph/graph.h"
 
 //
 // Created by visionary on 2020/5/21.
@@ -21,14 +22,40 @@ void testSqStack() {
 void testLiStack() {
     LiStack *liStack;
     createLiStack(&liStack);
-    LiPush(liStack,'h');
-    LiPush(liStack,'e');
-    LiPush(liStack,'a');
-    LiPush(liStack,'b');
+    LiPush(liStack, 'h');
+    LiPush(liStack, 'e');
+    LiPush(liStack, 'a');
+    LiPush(liStack, 'b');
     printLiStack(liStack);
     LiPop(liStack);
     printLiStack(liStack);
 }
 
+void testGraph() {
+    /**
+     * 有向图
+     */
+    EdgeType matrix[MaxVertexNum][MaxVertexNum] = {{0, 1, 1, 0},
+                                                   {0, 0, 0, 0},
+                                                   {0, 0, 0, 1},
+                                                   {1, 0, 0, 0}};
+    MGraph initGraph = {};
+    initGraph.vexNum = 4;
+    initGraph.arcNum = 4;
+    VertexType vertexA = 'a';
+    VertexType vertexB = 'b';
+    VertexType vertexC = 'c';
+    VertexType vertexD = 'd';
 
+    initGraph.Vex[0] = vertexA;
+    initGraph.Vex[1] = vertexB;
+    initGraph.Vex[2] = vertexC;
+    initGraph.Vex[3] = vertexD;
+
+    MGraph *mGraph = &initGraph;
+    createMGraph(mGraph, matrix);
+    printGraph(mGraph);
+    printf("是否存在边<A,B>");
+    AdjEdge(mGraph, vertexA, vertexB);
+}
 

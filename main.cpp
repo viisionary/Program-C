@@ -11,6 +11,7 @@ int main(int argc, const char *argv[]) {
 //    testSqStack();
 //    test();
 //    testLiStack();
-//    testTree();
-    testGraph();
+    testTree();
+//    testGraph();
+//    customTest();
 }

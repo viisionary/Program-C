@@ -1,7 +1,7 @@
 //
 // Created by visionary on 2020/5/27.
 //
-
+#include<vector>
 #include <cstdio>
 #include "graph.h"
 #include <iostream>
@@ -69,11 +69,14 @@ void AdjEdge(MGraph *G, VertexType X, VertexType Y) {
     }
 };
 
-void ALGraph2MGraph(ALGraph *alGraph, MGraph *mGraph);
+void ALGraph2MGraph(ALGraph *alGraph, MGraph *mGraph) {
 
-void MGraph2ALGraph(ALGraph *alGraph, MGraph *mGraph) {
-    AdjList *adjList[MaxVertexNum];
+};
+
+ALGraph MGraph2ALGraph(MGraph *mGraph) {
+    vector<VNode> adjList;
     for (int i = 0; i < mGraph->vexNum; ++i) {
+        // make顶点
         ArcNode firstNode = {mGraph->Vex[i]};
         VNode vNode = {};
         vNode.data = mGraph->Vex[i];
@@ -84,8 +87,18 @@ void MGraph2ALGraph(ALGraph *alGraph, MGraph *mGraph) {
                 firstNode.next = &childNode;
             }
         }
+        adjList.push_back(vNode);
     }
-    alGraph->vexNum = mGraph->vexNum;
+    ALGraph graph;
+    graph.vertices = adjList;
+    graph.vexNum = mGraph->vexNum;
+    graph.arcNum = mGraph->arcNum;
+    return graph;
 };
 
-
+void printALGraph(ALGraph *alGraph) {
+    cout << "输出邻接表\n";
+    for (int i = 0; i < alGraph->vexNum; ++i) {
+        cout << alGraph->vertices[i].data << " ";
+    }
+}

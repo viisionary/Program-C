@@ -57,5 +57,8 @@ void testGraph() {
     printGraph(mGraph);
     printf("是否存在边<A,B>");
     AdjEdge(mGraph, vertexA, vertexB);
+//    ALGraph *alGraph ={};
+    ALGraph alGraph = MGraph2ALGraph(mGraph);
+    printALGraph(&alGraph);
 }
 

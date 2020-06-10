@@ -6,4 +6,4 @@
 #define PROGRAM_C_TEST_H
 
 #endif //PROGRAM_C_TEST_H
-void test();
+void customTest();

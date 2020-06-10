@@ -1,7 +1,6 @@
 //
 // Created by visionary on 2020/5/21.
 //
-#include <MacTypes.h>
 #include <cstdlib>
 #include <printf.h>
 #include <cstring>
@@ -35,6 +34,7 @@ void printLiStack(LiStack *stack) {
     }
     printf("\n");
 }
+
 //压入一个元素
 bool LiPush(LiStack *pNode, char value) {
     LiStack *pInsert;

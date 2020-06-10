@@ -1,12 +1,12 @@
 //
 // Created by visionary on 2020/5/27.
 //
+#include<vector>
 
 #define  InfoType int//图中弧或者边包含的信息的类型
 #define MaxVertexNum 4
 typedef char VertexType;
 typedef int EdgeType;
-
 /**
  * 邻接矩阵
  */
@@ -30,10 +30,12 @@ typedef struct ArcNode {
 typedef struct VNode {
     VertexType data;
     ArcNode *first;//指向邻接点的指针
-} VNode, AdjList[MaxVertexNum];//存储各链表头结点的数组
+} VNode;
+
+//typeAdjList[MaxVertexNum];//存储各链表头结点的数组
 
 typedef struct {
-    AdjList vertices;//图中顶点的数组
+    std::vector<VNode> vertices;
     int vexNum, arcNum;//记录图中顶点数和边或弧数
 } ALGraph;
 
@@ -65,10 +67,17 @@ void Neighbors();
 void CreateDG(OLGraph *G);
 
 void testGraph();
+
 void AdjEdge(MGraph *G, VertexType X, VertexType Y);
 
-void MGraph2ALGraph(ALGraph *alGraph, MGraph *mGraph);
 void ALGraph2MGraph(ALGraph *alGraph, MGraph *mGraph);
+
 void createMGraph(MGraph *mGraph, EdgeType matrix[4][4]);
+
 void printGraph(MGraph *mGraph);
+
 void neighEdge(MGraph *mGraph, VertexType X);
+
+ALGraph MGraph2ALGraph(MGraph *mGraph);
+
+void printALGraph(ALGraph *alGraph);

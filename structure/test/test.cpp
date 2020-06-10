@@ -69,3 +69,9 @@ void test() {
     printf("myObject4 %d\n", myObject4->number);
     printf("myObject4 %d\n", (*myObject4).number);
 }
+
+void customTest(){
+    Object *myObject2;
+//    pointerExample(myObject2);
+//    printf("myObject2 %d\n", myObject2->number);
+}

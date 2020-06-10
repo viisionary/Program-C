@@ -1,80 +1,61 @@
-//
-// Created by visionary on 2020/5/21.
-#include <cstdio>
-#include <cstdlib>
 #include "tree.h"
+#include<vector>
+#include<stack>
+#include <iostream>
+
+using namespace std;
 
 
-//先序创建二叉树
-void CreateBiTree(BiTNode **T) {
-    int ch;
-    scanf("%d", &ch);
-    if (ch == -1) {
-        *T = NULL;
-        return;
-    } else {
-        *T = (BiTNode *) malloc(sizeof(BiTNode));
-        (*T)->data = ch;
-        printf("输入%d的左子节点：", ch);
-        CreateBiTree(&((*T)->lChild));
-        printf("输入%d的右子节点：", ch);
-        CreateBiTree((&(*T)->rChild));
+BiTNode *BuildTree(int &position, int datas[]) {
+    int data = datas[position++];
+    if (data == -1) {
+        return nullptr;
     }
-}
-
-BiTNode initTree(int *array, int length) {
-    BiTNode *T;
-    for (int i = 0; i < length; ++i) {
-        if (array[i] == -1) {
-            T = NULL;
-            break;
-        } else {
-            T = (BiTNode *) malloc(sizeof(BiTNode));
-            (T)->data = array[i];
-        }
-    }
-    return *T;
+    BiTNode *root = new BiTNode(data);
+    root->leftChild = BuildTree(position, datas);
+    root->rightChild = BuildTree(position, datas);
+    return root;
 }
 
 //先序遍历二叉树
 void PreOrderBiTree(BiTNode *T) {
-    if (T == NULL) {
+    if (T == nullptr) {
         return;
     } else {
-        printf("%d ", T->data);
-        PreOrderBiTree(T->lChild);
-        PreOrderBiTree(T->rChild);
+        cout << T->data << " ";
+        PreOrderBiTree(T->leftChild);
+        PreOrderBiTree(T->rightChild);
     }
 }
 
 //中序遍历二叉树
 void MiddleOrderBiTree(BiTNode *T) {
-    if (T == NULL) {
+    if (T == nullptr) {
         return;
     } else {
-        MiddleOrderBiTree(T->lChild);
-        printf("%d ", T->data);
-        MiddleOrderBiTree(T->rChild);
+        MiddleOrderBiTree(T->leftChild);
+        cout << T->data << " ";
+        MiddleOrderBiTree(T->rightChild);
     }
 }
 
 //后续遍历二叉树
 void PostOrderBiTree(BiTNode *T) {
-    if (T == NULL) {
+    if (T == nullptr) {
         return;
     } else {
-        PostOrderBiTree(T->lChild);
-        PostOrderBiTree(T->rChild);
-        printf("%d ", T->data);
+        PostOrderBiTree(T->leftChild);
+        cout << T->data << " ";
+        PostOrderBiTree(T->rightChild);
     }
 }
 
 //二叉树的深度
 int TreeDeep(BiTNode *T) {
     int deep = 0;
-    if (T != NULL) {
-        int leftdeep = TreeDeep(T->lChild);
-        int rightdeep = TreeDeep(T->rChild);
+    if (T != nullptr) {
+        int leftdeep = TreeDeep(T->leftChild);
+        int rightdeep = TreeDeep(T->rightChild);
         deep = leftdeep >= rightdeep ? leftdeep + 1 : rightdeep + 1;
     }
 
@@ -84,13 +65,13 @@ int TreeDeep(BiTNode *T) {
 //叶子节点个数
 int LeafCount(BiTNode *T) {
     static int count;
-    if (T != NULL) {
-        if (T->lChild == NULL && T->rChild == NULL) {
+    if (T != nullptr) {
+        if (T->leftChild == nullptr && T->rightChild == nullptr) {
             count++;
         }
 
-        LeafCount(T->lChild);
-        LeafCount(T->rChild);
+        LeafCount(T->leftChild);
+        LeafCount(T->rightChild);
     }
 
     return count;
@@ -100,39 +81,81 @@ int LeafCount(BiTNode *T) {
  * 非递归的中序遍历
  */
 void MiddleOrderBiTree_Non_Recursion(BiTNode *T) {
-    int *temp[] = {};
-    if (T != NULL) {
-//        temp.push
+    stack<BitTree> stack;
+    BitTree p = T;
+    int i = 0;
+    while (p != nullptr || stack.empty() != 1) {
+        bool notNull = (p != nullptr);
+        i++;
+        if (notNull) {
+            cout<< p;
+            stack.push(p);
+            p = p->leftChild;
+//            p = p->leftChild != nullptr ? p->leftChild : nullptr;
+        } else {
+//            stack.pop();
+            cout << p->data << " 2";
+            p = p->rightChild;
+//            p = p->rightChild != nullptr ? p->rightChild : nullptr;
+        }
+        if (i > 10) {
+            return;
+        }
     }
-
 }
 
-////主函数
-//int main(int argc, const char *argv[]) {
-//    BiTNode *T;
-//    int depth, leafCount = 0;
-//    printf("%d",argc);
-//    printf("请输入第一个节点的值，-1表示没有叶节点：\n");
-//    CreateBiTree(&T);
-//
-//    printf("先序遍历二叉树：");
-//    PreOrderBiTree(T);
-//    printf("\n");
-//
-//    printf("中序遍历二叉树：");
-//    MiddleOrderBiTree(T);
-//    printf("\n");
-//
-//    printf("后续遍历二叉树：");
-//    PostOrderBiTree(T);
-//    printf("\n");
-//
-//    depth = TreeDeep(T);
-//    printf("树的深度为：%d\n", depth);
-//
-//    leafCount = LeafCount(T);
-//    printf("叶子节点个数:%d\n", leafCount);
-//
-//    return 0;
-//}
-//
+void levelOrder(BitTree T) {
+    vector<BitTree> queue;
+    BitTree p;
+    queue.push_back(T);
+    while (!queue.empty()) {
+        p = queue.back();
+//        p = queue[queue.end()];
+        queue.pop_back();
+        cout << p->data << " ";
+        if (p->leftChild != nullptr) {
+            queue.push_back(p->leftChild);
+        }
+        if (p->rightChild != nullptr) {
+            queue.push_back(p->rightChild);
+        }
+    }
+}
+
+void inThread(BitTree &p, BitTree &pre) {
+    if (p != nullptr) {
+        inThread(p->leftChild, pre);
+        if (p->leftChild == nullptr) {
+            p->leftChild = pre;
+            p->leftTag = 1;
+        }
+        if (pre != nullptr && pre->rightChild == nullptr) {
+            pre->rightChild = p;
+            pre->rightTag = 1;
+        }
+        pre = p;
+        inThread(p->rightChild, pre);
+    }
+}
+
+BiTNode *firstNode(BiTNode *p) {
+    while (p && p->leftTag == 0) {
+        p = p->leftChild;
+    }
+    return p;
+}
+
+BiTNode *nextNode(BiTNode *p) {
+    if (p->rightTag == 0) {
+        return firstNode(p->rightChild);
+    }
+    cout << "下一个是" << p->rightChild->data;
+
+    return p->rightChild;
+}
+
+void inOrder(BiTNode *T) {
+    for (BiTNode *p = firstNode(T); p != nullptr; p = nextNode(T)) {
+        cout << "->" << p->data;
+    }
+}

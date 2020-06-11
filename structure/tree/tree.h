@@ -19,7 +19,7 @@ void PreOrderBiTree(BiTNode *T);
 void MiddleOrderBiTree(BiTNode *T);
 void MiddleOrderBiTree_Non_Recursion(BiTNode *T);
 void PostOrderBiTree(BiTNode *T);
-
+void postOrderBiTree_Non_Recursion(BiTNode *T);
 void testTree();
 
 int TreeDeep(BiTNode *T);
@@ -29,6 +29,6 @@ int LeafCount(BiTNode *T);
 void levelOrder(BitTree T);
 
 // 线索化
+void createInTread(BitTree T);
 void inOrder(BiTNode *T);
-
-void inThread(BitTree p);
+void levelBottom2Top(BiTNode *T);

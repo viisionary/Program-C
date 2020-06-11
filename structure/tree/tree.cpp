@@ -2,6 +2,7 @@
 #include<vector>
 #include<stack>
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -45,8 +46,8 @@ void PostOrderBiTree(BiTNode *T) {
         return;
     } else {
         PostOrderBiTree(T->leftChild);
-        cout << T->data << " ";
         PostOrderBiTree(T->rightChild);
+        cout << T->data << " ";
     }
 }
 
@@ -83,23 +84,15 @@ int LeafCount(BiTNode *T) {
 void MiddleOrderBiTree_Non_Recursion(BiTNode *T) {
     stack<BitTree> stack;
     BitTree p = T;
-    int i = 0;
     while (p != nullptr || stack.empty() != 1) {
-        bool notNull = (p != nullptr);
-        i++;
-        if (notNull) {
-            cout<< p;
+        if (p != nullptr) {
             stack.push(p);
             p = p->leftChild;
-//            p = p->leftChild != nullptr ? p->leftChild : nullptr;
         } else {
-//            stack.pop();
-            cout << p->data << " 2";
+            p = stack.top();
+            cout << p->data << " ";
+            stack.pop();
             p = p->rightChild;
-//            p = p->rightChild != nullptr ? p->rightChild : nullptr;
-        }
-        if (i > 10) {
-            return;
         }
     }
 }
@@ -110,7 +103,6 @@ void levelOrder(BitTree T) {
     queue.push_back(T);
     while (!queue.empty()) {
         p = queue.back();
-//        p = queue[queue.end()];
         queue.pop_back();
         cout << p->data << " ";
         if (p->leftChild != nullptr) {
@@ -149,13 +141,79 @@ BiTNode *nextNode(BiTNode *p) {
     if (p->rightTag == 0) {
         return firstNode(p->rightChild);
     }
-    cout << "下一个是" << p->rightChild->data;
-
     return p->rightChild;
 }
 
 void inOrder(BiTNode *T) {
-    for (BiTNode *p = firstNode(T); p != nullptr; p = nextNode(T)) {
-        cout << "->" << p->data;
+    for (BiTNode *p = firstNode(T); p != nullptr; p = nextNode(p)) {
+        cout << p->data << " ";
+    }
+}
+
+void createInTread(BitTree T) {
+    BitTree pre = nullptr;
+    if (T != nullptr) {
+        inThread(T, pre);
+        pre->rightChild = nullptr;
+        pre->leftTag = 1;
+    }
+}
+
+void postOrderBiTree_Non_Recursion(BiTNode *T) {
+    stack<BitTree> stack;
+    BitTree p = T;
+    BitTree r = nullptr;
+    while (p != nullptr || stack.empty() != 1) {
+        if (p != nullptr) {
+            stack.push(p);
+            p = p->leftChild; //取到最左边 入栈 4 2 1
+        } else {
+            p = stack.top(); // 第一次栈顶4 第二次栈顶是2 第三次是1
+            if (p->rightChild && (p->rightChild != r)) {
+                // 1的右存在
+                p = p->rightChild;
+                // 3入栈    3->1
+                stack.push(p);
+                p = p->leftChild; //p=（3的左子树） p=null
+            } else {
+                // 4的右子树不存在。4出
+                // 2的右也不存在。2出
+                // 3的右不存在 3出
+                // 1出
+                stack.pop();
+                cout << p->data << " ";
+                r = p; //r = 4; //r =2 //r=3
+                p = nullptr; // p 为空
+            }
+        }
+    }
+};
+
+/**
+ * 自上而下自右到左
+ * @param T
+ */
+void levelBottom2Top(BiTNode *T) {
+    stack<BitTree> stack;
+    queue<BitTree> queue;
+    BitTree p = T;
+    if (p == nullptr) {
+        return;;
+    }
+    queue.push(T);
+    while (queue.empty() != 1) {
+        p = queue.front();
+        queue.pop();
+        stack.push(p);
+        if (p->leftChild) {
+            queue.push(p->leftChild);
+        }
+        if (p->rightChild) {
+            queue.push(p->rightChild);
+        }
+    }
+    while (stack.empty() != 1) {
+        cout << stack.top()->data << " ";
+        stack.pop();
     }
 }
